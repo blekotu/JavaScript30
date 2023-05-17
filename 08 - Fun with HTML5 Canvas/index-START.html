@@ -5,8 +5,65 @@
   <title>HTML5 Canvas</title>
 </head>
 <body>
-<canvas id="draw" width="800" height="800"></canvas>
+<canvas id="canvas" width="800" height="600"></canvas>
+
 <script>
+  const canvas=document.getElementById('canvas');
+
+  const ctx=canvas.getContext('2d');
+   
+  canvas.height=window.innerHeight;
+  canvas.width=window.innerWidth;
+  
+  let lastX=0;
+  let lastY=0;
+  let mouseDown=false;
+  let kolor=1
+  let grubosc=1
+  let dx=1
+
+  //ctx context
+  ctx.strokeStyle = '#BADA5';
+  ctx.lineJoin = 'round';
+  ctx.lineCap = 'round';
+  
+
+function rysuj (e)
+{
+  if (!mouseDown) return;
+  //Turtaj wchodze tylko kiedy mam wcisniety klwisz mysy
+
+  (kolor>255)?kolor=0:kolor+=dx* Math.random(1);
+  (grubosc<20)?grubosc+=Math.random(4)*Math.random(3):grubosc=1;
+  
+  ctx.beginPath();
+  // start from
+  ctx.moveTo(lastX, lastY);
+  // go to
+  ctx.lineTo(e.offsetX, e.offsetY);
+  ctx.lineWidth=grubosc;
+  ctx.strokeStyle=`rgba(${kolor},0,0,1)`;
+  ctx.stroke();
+ 
+  [lastX, lastY] = [e.offsetX, e.offsetY];
+  
+
+
+  console.log(kolor);
+
+    
+}
+
+
+canvas.addEventListener('mousemove', rysuj)
+canvas.addEventListener('mousedown', ()=>{
+                [lastX,lastY]=[this.offsetX,this.offsetY];
+                mouseDown=true;})
+canvas.addEventListener('mouseup',() => mouseDown=false)
+canvas.addEventListener('mouseout',() => mouseDown=false)
+
+
+
 </script>
 
 <style>

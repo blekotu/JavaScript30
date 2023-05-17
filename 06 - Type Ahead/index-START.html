@@ -17,6 +17,54 @@
 <script>
 const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
 
+const cities=[];
+
+fetch(endpoint)
+  .then(blob => blob.json())
+  .then(data=> cities.push(...data))
+  .catch(blad_msg => alert(blad_msg))
+   // To promis dajacy po sukcesie wynik do blob, ktory wyzwala promis blob.json i po sukcesie push do cities
+   //  .catch obsluga bledow promisa i komunikat bledu kleje do blad_msg
+
+
+   function numberWithCommas(x) 
+   {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
+
+function findMatch(wordToMatch,cities) 
+{
+ 
+  return cities.filter(place=>{
+    const regex = new RegExp(wordToMatch,'gi')   //g GLOBAL i INSENSITIVE LOWER UPPER
+    return place.city.match(regex) || place.state.match(regex)
+    }
+                      );
+}
+
+function displayMatches()
+{
+  const matches=findMatch(this.value,cities);
+  const txthtml=matches.map(place => {
+    
+        const reg = new RegExp(this.value,'gi');
+        const CityName=place.city.replace(reg,`<span class="hl">${this.value}</span>`)
+        const StateName=place.state.replace(reg,`<span class"hl">${this.state}</span>`)    
+        const populacja=numberWithCommas(place.population);
+
+      return `<li> 
+          <span class="name"> ${CityName}, ${StateName} </span>
+          <span class="population"> ${populacja} </span>
+        </li>`   
+  }).join('');
+  sugestie.innerHTML=txthtml;   //innerHTML  >> wstawia kawałek html ze zmiennej która stworzylismy wczesniej
+}
+
+const sugestie=document.querySelector('.suggestions')
+const inputline=document.querySelector('.search')
+inputline.addEventListener('change',displayMatches)
+inputline.addEventListener('keyup',displayMatches);
+
 </script>
 </body>
 </html>
