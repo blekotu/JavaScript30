@@ -96,6 +96,49 @@
   </div>
 
 <script>
+
+const tabela = [];
+let lastClick=0;
+let shiftDown=false;
+
+function klikniecie()
+{
+  let positionTablica=tabela.indexOf(this)
+  let dx=0
+  console.dir(this)
+  if (shiftDown ) {
+   
+    // dx okresla kierunek +1 / -1 w zaleznosci czy ostaani klik ponizej czy powyzej aktualnego
+    (positionTablica>lastClick)?dx=1:dx=-1;
+        
+    for (let i=lastClick; i!=positionTablica; i=i+dx) {
+      tabela[i].checked=true
+    //checkboxy zaznaczanie
+    }
+  } 
+  //przesun znaczni ostatniego klika do aktualnego miejsca
+    lastClick=tabela.indexOf(this);
+    console.log(lastClick)
+  }
+
+function sprawdzShifta()
+{
+ (this.event.keyCode===16)?shiftDown=true:shiftDown=false;
+}
+
+const linki=document.querySelectorAll(".item>input");
+console.log(linki)
+
+//pakuje do tablicy zebym mogl przeszukac i miec indexOf kliknietego Inputa
+linki.forEach(linek=>tabela.push(linek))
+//slucham czy cos kliknelo
+linki.forEach(box =>box.addEventListener('click',klikniecie));
+
+//Sprawdzzam czy wcisniety Shift  keyCode==16s
+window.addEventListener('keydown', ()=>(this.event.keyCode===16)?shiftDown=true:shiftDown=false)
+window.addEventListener('keyup', ()=>shiftDown=false)
+
+
 </script>
 </body>
 </html>
