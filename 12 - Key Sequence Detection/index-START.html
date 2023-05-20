@@ -7,6 +7,17 @@
 </head>
 <body>
 <script>
+let tab=[];
+const secretCode="abrakadabra";
+
+document.addEventListener('keyup', (e) => {
+  tab.push(e.key);
+  tab.splice(0,tab.length-secretCode.length)
+  console.log(tab.join(""));
+  if (tab.join("")==secretCode) {
+    alert("Sukces!");
+  };
+});
 </script>
 </body>
 </html>

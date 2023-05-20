@@ -35,19 +35,41 @@
       'Billings, Josh', 'Birrell, Augustine', 'Blair, Tony', 'Beecher, Henry', 'Biondo, Frank'
     ];
     
+    const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
-
+    const wybrancy= inventors.filter(czlowiek=> (czlowiek.year>1500 && czlowiek.year<1600));
+    console.log(wybrancy);
+    //wybrancy.forEach((a) => {
+    //    console.table(a)});
     // Array.prototype.map()
     // 2. Give us an array of the inventors first and last names
-
+    
+    const ludki =new Array;
+    inventors.forEach(czlek=>ludki.push(`${czlek.first} ${czlek.last}`));
+      console.table(ludki);
+    
+    
+        
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
+      inventors.sort((a,b)=>(a.year>b.year)?1:-1);
+      console.table(inventors);
 
+    // Array.prototype.reduce(con
     // Array.prototype.reduce()
-    // 4. How many years did all the inventors live all together?
+    // 4. How many years did all the inventors live?
+      const totalage=inventors.reduce((a,b)=>{return a+b.passed-b.year},0);
+      console.log(totalage);
+//reduce(aCumulativalueve, bObecnyrekord)  2nd 0 - initial 
+
+
 
     // 5. Sort the inventors by years lived
+  inventors.sort((a,b)=>((a.passed-a.year)>(b.passed-b.year))?1:-1);
+   console.table(inventors);
+
 
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
@@ -55,11 +77,17 @@
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
+      // format people to 'Imie,Nazwisko'
+      const ptab=new Array;
+      people.forEach(ludek=>ptab.push(ludek.split(',')))
+      ptab.sort((a,b)=>(a[1]>b[1])?1:-1)
+      console.table(ptab)
+
+
 
     // 8. Reduce Exercise
     // Sum up the instances of each of these
-    const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
-
+    
   </script>
 </body>
 </html>
